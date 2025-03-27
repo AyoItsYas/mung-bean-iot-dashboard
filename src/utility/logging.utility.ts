@@ -16,7 +16,7 @@ class Logger {
 		this.log("logger initialized", LogLevel.INFO);
 	}
 
-	log(message: string, level: LogLevel = LogLevel.DEBUG) {
+	log(message: any, level: LogLevel = LogLevel.DEBUG) {
 		let logFunc = console.log;
 		switch (level) {
 			case LogLevel.DEBUG:
