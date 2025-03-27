@@ -10,6 +10,8 @@ type JsonPayload<X> = {
 	message: string;
 };
 
+export class ResponseSafeError extends Error {}
+
 export default async function respond<DataInType, DataOutType>(
 	request: NextRequest,
 	payloadHandler: (dataIn: DataInType) => Promise<JsonPayload<DataOutType>>,
@@ -35,11 +37,16 @@ export default async function respond<DataInType, DataOutType>(
 		const json = await payloadHandler(dataIn);
 		return Response.json(json);
 	} catch (error: unknown) {
-		if (error instanceof Error) {
+		let safeMessage: string | undefined;
+
+		if (error instanceof ResponseSafeError) {
+			safeMessage = error.message;
+		} else if (error instanceof Error) {
 			logger.log(error.message, logger.LogLevel.ERROR);
 		} else {
 			logger.log(error);
 		}
-		return Response.json({ message: "an error occurred" });
+
+		return Response.json({ message: safeMessage || "an error occurred" });
 	}
 }
