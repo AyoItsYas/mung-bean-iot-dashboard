@@ -1,33 +1,40 @@
 {
-  "name": "mung-bean-iot-dashboard",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "format": "biome format --no-errors-on-unmatched",
-    "format:fix": "biome format --write --no-errors-on-unmatched"
-  },
-  "dependencies": {
-    "next": "15.2.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "tailwindcss": "^4",
-    "typescript": "^5"
-  },
-  "engines": {
-    "npm": "Unsupported",
-    "node": ">=20",
-    "yarn": ">=4.6.0"
-  },
-  "packageManager": "yarn@4.7.0"
+	"name": "mung-bean-iot-dashboard",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "yarn env:copy:dev && next dev",
+		"build": "next build",
+		"start:dev": "yarn env:copy:dev && next start",
+		"start:prod": "yarn env:copy:prod && next start",
+		"lint": "next lint",
+		"format": "biome format --no-errors-on-unmatched",
+		"format:fix": "biome format --write --no-errors-on-unmatched",
+		"env:copy:dev": "cp .env.development .env",
+		"env:copy:prod": "cp .env.production .env"
+	},
+	"dependencies": {
+		"dotenv": "^16.4.7",
+		"dotenv-expand": "^12.0.1",
+		"mongodb": "^6.15.0",
+		"mongoose": "^8.13.0",
+		"next": "15.2.4",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@tailwindcss/postcss": "^4",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"tailwindcss": "^4",
+		"typescript": "^5"
+	},
+	"engines": {
+		"npm": "Unsupported",
+		"node": ">=20",
+		"yarn": ">=4.6.0"
+	},
+	"packageManager": "yarn@4.7.0"
 }
