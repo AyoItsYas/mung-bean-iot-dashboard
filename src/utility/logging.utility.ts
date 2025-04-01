@@ -30,7 +30,9 @@ class Logger {
 				break;
 		}
 
-		logFunc(` ${LOGGING_PREFIX} [${level}] (${this.location}): ${message}`);
+		logFunc(
+			` ${LOGGING_PREFIX} [${level}] ${new Date().toISOString()} (${this.location}): ${message}`,
+		);
 	}
 }
 

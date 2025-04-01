@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import connect from "@/config/database.config";
 
-import Unit from "@/models/unit.model";
+import UnitModel from "@/models/unit.model";
 import mongoose from "mongoose";
 
 import Logger from "@/utility/logging.utility";
@@ -17,7 +17,7 @@ const logger = new Logger(import.meta.url);
 
 const bodySchema = z.object({
 	macAddress: z.string().regex(MAC_ADDRESS_REGEX),
-	password: z.string().length(17),
+	token: z.string().length(17),
 });
 
 type Body = z.infer<typeof bodySchema>;
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 		async (dataIn) => {
 			await connect();
 
-			const unit = new Unit(dataIn);
+			const unit = new UnitModel(dataIn);
 
 			try {
 				await unit.save();
