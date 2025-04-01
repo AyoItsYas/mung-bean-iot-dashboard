@@ -19,8 +19,8 @@ const logger = new Logger(import.meta.url);
 const bodySchema = z.object({
 	token: z.string().length(17),
 	macAddress: z.string().regex(MAC_ADDRESS_REGEX),
-	temperature: z.number(),
-	humidity: z.number(),
+	internalTemperature: z.number(),
+	internalHumidity: z.number(),
 });
 
 type Body = z.infer<typeof bodySchema>;
