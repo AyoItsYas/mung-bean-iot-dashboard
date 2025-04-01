@@ -5,8 +5,8 @@ import UnitReportModel from "@/models/unit/report.model";
 import { TestChart } from "@/components/dashboard/test-chart";
 
 interface UnitReportModelData {
-	temperature: number;
-	humidity: number;
+	internalTemperature: number;
+	internalHumidity: number;
 	createdAt: Date;
 }
 
