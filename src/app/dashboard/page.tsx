@@ -26,8 +26,8 @@ export default async function DashboardPage() {
 	console.log(data[0]);
 
 	const chartData = data.map((item) => ({
-		internalTemperature: item.temperature,
-		internalHumidity: item.humidity,
+		internalTemperature: item.internalTemperature,
+		internalHumidity: item.internalHumidity,
 		time: item.createdAt.toISOString(),
 	}));
 
