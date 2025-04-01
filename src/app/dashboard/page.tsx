@@ -14,8 +14,8 @@ export default async function DashboardPage() {
 	const data: UnitReportModelData[] = await UnitReportModel.find(
 		{},
 		{
-			temperature: 1,
-			humidity: 1,
+			internalTemperature: 1,
+			internalHumidity: 1,
 			createdAt: 1,
 		},
 	)
@@ -26,8 +26,8 @@ export default async function DashboardPage() {
 	console.log(data[0]);
 
 	const chartData = data.map((item) => ({
-		temperature: item.temperature,
-		humidity: item.humidity,
+		internalTemperature: item.temperature,
+		internalHumidity: item.humidity,
 		time: item.createdAt.toISOString(),
 	}));
 

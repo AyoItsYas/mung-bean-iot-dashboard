@@ -34,8 +34,8 @@ export function TestChart({
 	data,
 }: {
 	data: {
-		temperature: number;
-		humidity: number;
+		internalTmperature: number;
+		internalHumidity: number;
 		time: string;
 	}[];
 }) {
