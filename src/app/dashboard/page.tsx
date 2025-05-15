@@ -4,8 +4,10 @@ import connect from "@/config/database.config";
 
 import UnitReportModel from "@/models/unit/report.model";
 
-import { TestChart } from "@/components/dashboard/test-chart";
-import { WeightChart } from "@/components/dashboard/weight-chart";
+import { InternalsChart } from "@/components/dashboard/internals-chart";
+import { GrowthChart } from "@/components/dashboard/growth-chart";
+import { MoistureChart } from "@/components/dashboard/moisture-chart";
+import { WaterTempChart } from "@/components/dashboard/water-temp-chart";
 
 interface UnitReportModelData {
   internalTemperature: number;
@@ -33,10 +35,18 @@ export default async function DashboardPage() {
   }));
 
   return (
-    <div className="px-6 gap-6 flex flex-row">
-      <TestChart data={chartData} />
+    <div className="space-y-6">
+      <div className="px-6 gap-6 flex flex-row">
+        <InternalsChart data={chartData} />
 
-      <WeightChart data={chartData} />
+        <GrowthChart data={chartData} />
+      </div>
+
+      <div className="px-6 gap-6 flex flex-row">
+        <WaterTempChart data={chartData} />
+
+        <MoistureChart data={chartData} />
+      </div>
     </div>
   );
 }

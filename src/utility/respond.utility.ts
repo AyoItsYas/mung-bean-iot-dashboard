@@ -19,7 +19,6 @@ export default async function respond<DataInType, DataOutType>(
 ) {
 	try {
 		const dataIn = await request.json();
-		console.log(dataIn);
 
 		if (schema) {
 			try {

@@ -66,7 +66,7 @@ export function MoistureChart({
               content={<ChartTooltipContent indicator="dot" />}
             />
             <Area
-              dataKey="weight"
+              dataKey="moisture"
               type="natural"
               fill="var(--color-mobile)"
               fillOpacity={0.4}

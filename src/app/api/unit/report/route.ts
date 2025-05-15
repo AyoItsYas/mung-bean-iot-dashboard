@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { MongoServerError } from "mongodb";
 
 import connect from "@/config/database.config";
 
@@ -12,7 +13,6 @@ import respond, { ResponseSafeError } from "@/utility/respond.utility";
 import { MAC_ADDRESS_REGEX } from "@/constants/common.constants";
 
 import type { NextRequest } from "next/server";
-import { MongoServerError } from "mongodb";
 
 const logger = new Logger(import.meta.url);
 
@@ -24,6 +24,7 @@ const bodySchema = z.object({
   moisture: z.number(),
   waterTemperature: z.number(),
   weight: z.number(),
+  pressure: z.number(),
 });
 
 type Body = z.infer<typeof bodySchema>;
@@ -45,6 +46,7 @@ export async function POST(request: NextRequest) {
       }
 
       if (unit.token !== dataIn.token) {
+        logger.log(["invalid token", dataIn.macAddress], logger.LogLevel.INFO);
         throw new ResponseSafeError("invalid token");
       }
 
@@ -55,6 +57,7 @@ export async function POST(request: NextRequest) {
         moisture: dataIn.moisture,
         waterTemperature: dataIn.waterTemperature,
         weight: dataIn.weight,
+        pressure: dataIn.pressure,
       };
 
       const unitReport = new UnitReportModel(reportData);

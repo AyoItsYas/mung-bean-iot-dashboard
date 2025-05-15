@@ -1,3 +1,3 @@
 export default function ProductionPage() {
-	return <div>Production Page</div>;
+	return <div className="px-6">Production Page</div>;
 }

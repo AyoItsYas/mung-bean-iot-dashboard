@@ -31,7 +31,9 @@ class Logger {
 		}
 
 		logFunc(
-			` ${LOGGING_PREFIX} [${level}] ${new Date().toISOString()} (${this.location}): ${message}`,
+			` ${LOGGING_PREFIX} [${level}] ${new Date().toISOString()} (${
+				this.location
+			}): ${message}`,
 		);
 	}
 }
