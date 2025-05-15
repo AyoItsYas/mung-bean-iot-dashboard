@@ -10,43 +10,43 @@ import { MoistureChart } from "@/components/dashboard/moisture-chart";
 import { WaterTempChart } from "@/components/dashboard/water-temp-chart";
 
 interface UnitReportModelData {
-  internalTemperature: number;
-  internalHumidity: number;
-  moisture: number;
-  waterTemperature: number;
-  weight: number;
-  createdAt: Date;
+	internalTemperature: number;
+	internalHumidity: number;
+	moisture: number;
+	waterTemperature: number;
+	weight: number;
+	createdAt: Date;
 }
 
 export default async function DashboardPage() {
-  await connect();
-  const data: UnitReportModelData[] = await UnitReportModel.find({})
-    .sort({ createdAt: 1 })
-    .limit(3600)
-    .exec();
+	await connect();
+	const data: UnitReportModelData[] = await UnitReportModel.find({})
+		.sort({ createdAt: 1 })
+		.limit(3600)
+		.exec();
 
-  const chartData = data.map((item) => ({
-    internalTemperature: item.internalTemperature,
-    internalHumidity: item.internalHumidity,
-    waterTemperature: item.waterTemperature,
-    moisture: item.moisture,
-    weight: item.weight,
-    time: item.createdAt.toISOString(),
-  }));
+	const chartData = data.map((item) => ({
+		internalTemperature: item.internalTemperature,
+		internalHumidity: item.internalHumidity,
+		waterTemperature: item.waterTemperature,
+		moisture: item.moisture,
+		weight: item.weight,
+		time: item.createdAt.toISOString(),
+	}));
 
-  return (
-    <div className="space-y-6">
-      <div className="px-6 gap-6 flex flex-row">
-        <InternalsChart data={chartData} />
+	return (
+		<div className="space-y-6">
+			<div className="px-6 gap-6 flex flex-row">
+				<InternalsChart data={chartData} />
 
-        <GrowthChart data={chartData} />
-      </div>
+				<GrowthChart data={chartData} />
+			</div>
 
-      <div className="px-6 gap-6 flex flex-row">
-        <WaterTempChart data={chartData} />
+			<div className="px-6 gap-6 flex flex-row">
+				<WaterTempChart data={chartData} />
 
-        <MoistureChart data={chartData} />
-      </div>
-    </div>
-  );
+				<MoistureChart data={chartData} />
+			</div>
+		</div>
+	);
 }

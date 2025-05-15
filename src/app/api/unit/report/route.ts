@@ -17,65 +17,65 @@ import type { NextRequest } from "next/server";
 const logger = new Logger(import.meta.url);
 
 const bodySchema = z.object({
-  token: z.string().length(17),
-  macAddress: z.string().regex(MAC_ADDRESS_REGEX),
-  internalTemperature: z.number(),
-  internalHumidity: z.number(),
-  moisture: z.number(),
-  waterTemperature: z.number(),
-  weight: z.number(),
-  pressure: z.number(),
+	token: z.string().length(17),
+	macAddress: z.string().regex(MAC_ADDRESS_REGEX),
+	internalTemperature: z.number(),
+	internalHumidity: z.number(),
+	moisture: z.number(),
+	waterTemperature: z.number(),
+	weight: z.number(),
+	pressure: z.number(),
 });
 
 type Body = z.infer<typeof bodySchema>;
 
 type Data = {
-  id: number;
+	id: number;
 };
 
 export async function POST(request: NextRequest) {
-  return respond<Body, Data>(
-    request,
-    async (dataIn) => {
-      await connect();
+	return respond<Body, Data>(
+		request,
+		async (dataIn) => {
+			await connect();
 
-      const unit = await UnitModel.findOne({ macAddress: dataIn.macAddress });
+			const unit = await UnitModel.findOne({ macAddress: dataIn.macAddress });
 
-      if (!unit) {
-        throw new ResponseSafeError("unit not found");
-      }
+			if (!unit) {
+				throw new ResponseSafeError("unit not found");
+			}
 
-      if (unit.token !== dataIn.token) {
-        logger.log(["invalid token", dataIn.macAddress], logger.LogLevel.INFO);
-        throw new ResponseSafeError("invalid token");
-      }
+			if (unit.token !== dataIn.token) {
+				logger.log(["invalid token", dataIn.macAddress], logger.LogLevel.INFO);
+				throw new ResponseSafeError("invalid token");
+			}
 
-      const reportData = {
-        unitId: unit._id,
-        internalTemperature: dataIn.internalTemperature,
-        internalHumidity: dataIn.internalHumidity,
-        moisture: dataIn.moisture,
-        waterTemperature: dataIn.waterTemperature,
-        weight: dataIn.weight,
-        pressure: dataIn.pressure,
-      };
+			const reportData = {
+				unitId: unit._id,
+				internalTemperature: dataIn.internalTemperature,
+				internalHumidity: dataIn.internalHumidity,
+				moisture: dataIn.moisture,
+				waterTemperature: dataIn.waterTemperature,
+				weight: dataIn.weight,
+				pressure: dataIn.pressure,
+			};
 
-      const unitReport = new UnitReportModel(reportData);
+			const unitReport = new UnitReportModel(reportData);
 
-      try {
-        await unitReport.save();
-      } catch (error) {
-        if (error instanceof MongoServerError) {
-          if (error.code === 11000) {
-            throw new ResponseSafeError("unit already exists");
-          }
-        }
+			try {
+				await unitReport.save();
+			} catch (error) {
+				if (error instanceof MongoServerError) {
+					if (error.code === 11000) {
+						throw new ResponseSafeError("unit already exists");
+					}
+				}
 
-        logger.log(error, logger.LogLevel.ERROR);
-      }
+				logger.log(error, logger.LogLevel.ERROR);
+			}
 
-      return { message: "success" };
-    },
-    bodySchema
-  );
+			return { message: "success" };
+		},
+		bodySchema,
+	);
 }

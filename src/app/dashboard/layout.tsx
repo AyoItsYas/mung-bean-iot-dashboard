@@ -8,32 +8,32 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import data from "./data.json";
 
 export default function DashboardLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
+	return (
+		<SidebarProvider
+			style={
+				{
+					"--sidebar-width": "calc(var(--spacing) * 72)",
+					"--header-height": "calc(var(--spacing) * 12)",
+				} as React.CSSProperties
+			}
+		>
+			<AppSidebar variant="inset" />
 
-      <SidebarInset>
-        <SiteHeader />
+			<SidebarInset>
+				<SiteHeader />
 
-        <div className="flex flex-1 flex-col max-h-[80vh]">
-          <div className="@container/main flex flex-1 flex-col gap-2">
-            <main className="flex flex-col gap-4 py-4 md:gap-6 md:py-6 ">
-              {children}
-            </main>
-          </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
-  );
+				<div className="flex flex-1 flex-col max-h-[80vh]">
+					<div className="@container/main flex flex-1 flex-col gap-2">
+						<main className="flex flex-col gap-4 py-4 md:gap-6 md:py-6 ">
+							{children}
+						</main>
+					</div>
+				</div>
+			</SidebarInset>
+		</SidebarProvider>
+	);
 }

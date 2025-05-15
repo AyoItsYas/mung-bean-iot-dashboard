@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
         throw new ResponseSafeError("invalid token");
       }
 
+      return { message: "success", commands: [0, 1] };
       // return { message: "success", commands: [0, 9] };
 
       const reports = await UnitReportModel.find({
